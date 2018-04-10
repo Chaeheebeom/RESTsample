@@ -10,9 +10,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.spring.rest.domain.Criteria;
+import com.spring.rest.domain.PageMaker;
 import com.spring.rest.domain.ReplyVO;
 import com.spring.rest.service.ReplyService;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/replies")
@@ -73,4 +78,31 @@ public class ReplyController {
 			}
 			return entity;
 		}
+		@RequestMapping(path="/{bno}/{page}",method=RequestMethod.GET)
+		public ResponseEntity<Map<String,Object>> listPage(@PathVariable("bno")int bno
+				,@PathVariable("page")int page){
+			ResponseEntity<Map<String,Object>> entity=null;
+			try {
+				Criteria cri=new Criteria();
+				cri.setPage(page);
+				PageMaker maker=new PageMaker();
+				maker.setCri(cri);
+				Map<String,Object> map=new HashMap<>();
+				
+				List<ReplyVO> list=service.listReplyPage(bno, cri);
+				map.put("list", list);
+				
+				int replyCount=service.count(bno);
+				
+				maker.setTotalCount(replyCount);
+				map.put("maker",maker);
+				
+				entity=new ResponseEntity<>(map,HttpStatus.OK);
+			}catch(Exception e) {
+				e.printStackTrace();
+				entity=new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			}
+			return entity;
+		}
+		
 }

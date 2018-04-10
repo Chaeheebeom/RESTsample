@@ -18,4 +18,17 @@
 	<delete id="delete">
 		delete from tbl_reply where rno=#{rno}
 	</delete>
+	<!-- 페이지처리 -->
+	<select id="listPage" resultType="com.spring.rest.domain.ReplyVO">
+		select *
+		from tbl_reply
+		where bno=#{bno}
+		order by rno desc
+		limit #{cri.pageStart},#{cri.perPageNum}
+	</select>
+	<select id="count" resultType="int">
+		select count(*)
+		from tbl_reply
+		where bno=#{bno}
+	</select>
 </mapper>

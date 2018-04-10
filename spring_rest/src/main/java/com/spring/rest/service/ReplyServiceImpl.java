@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
+import com.spring.rest.domain.Criteria;
 import com.spring.rest.domain.ReplyVO;
 import com.spring.rest.persistence.ReplyDAO;
 
@@ -37,6 +38,18 @@ public class ReplyServiceImpl implements ReplyService {
 	public List<ReplyVO> list(int bno) throws Exception {
 		
 		return dao.list(bno);
+	}
+
+	@Override
+	public List<ReplyVO> listReplyPage(int bno, Criteria cri) throws Exception {
+		
+		return dao.listPage(bno, cri);
+	}
+
+	@Override
+	public int count(int bno) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.count(bno);
 	}
 
 }
