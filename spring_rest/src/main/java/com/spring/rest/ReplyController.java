@@ -65,7 +65,6 @@ public class ReplyController {
 		return entity;
 	}
 	//삭제하기
-	//수정하기 ㅎ
 		@RequestMapping(path="/{rno}",method=RequestMethod.DELETE)
 		public ResponseEntity<String> delete(@PathVariable("rno")int rno){
 			ResponseEntity<String> entity=null;
